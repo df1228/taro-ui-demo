@@ -174,7 +174,6 @@ export default class DetailPage extends Taro.Component {
                 </View>
               </View>
 
-
               <View className='at-article__section order-state'>
                 <View className='at-article__h1'>当前状态</View>
                 <View className='at-article__p'>
@@ -183,7 +182,7 @@ export default class DetailPage extends Taro.Component {
               </View>
 
               <View className='at-article__section bottom-button'>
-                <AtButton type='secondary' size='normal'>预约</AtButton>
+                <AtButton type='secondary' size='normal'>确认预约时间</AtButton>
               </View>
 
             </View>

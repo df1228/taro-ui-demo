@@ -18,7 +18,9 @@ class App extends Component {
       'pages/advanced/index',
       'pages/order/index',
       'pages/detail/index',
-      'pages/profile/index'
+      'pages/profile/index',
+      'pages/bindPhone/index',
+
     ],
     window: {
       backgroundTextStyle: 'light',
