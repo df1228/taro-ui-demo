@@ -5,6 +5,8 @@ import './index.scss'
 import { AtTabBar } from 'taro-ui'
 import { AtButton } from 'taro-ui'
 
+import util from '../../utils/util'
+
 export default class DetailPage extends Taro.Component {
   config = {
     navigationBarTitleText: 'Taro UI'
@@ -40,10 +42,13 @@ export default class DetailPage extends Taro.Component {
     this.setState({
       id: this.$router.params.id
     })
-  }
-  componentWillUpdate() {
 
+    Taro.showLoading({
+      title: 'loading'
+    })
+      .then(res => console.log(res))
   }
+
   componentDidMount() {
     let url = "https://api.xsjd123.com/after_sales?id=eq." + this.state.id
     console.log(url)
@@ -54,6 +59,8 @@ export default class DetailPage extends Taro.Component {
       .then(res => {
         console.log(res.data)
         this.setState({ item: res.data[0] })
+
+        Taro.hideLoading()
       })
   }
 
@@ -154,13 +161,28 @@ export default class DetailPage extends Taro.Component {
               </View>
 
               <View className='at-article__section'>
-                <View className='at-article__h1'>当前状态</View>
+                <View className='at-article__h3'>订单创建时间</View>
                 <View className='at-article__p'>
-                  等待与客户预约具体上门服务时间
+                  {util.formatDate(item.created_at, "yyyy-MM-dd hh:mm:ss")}
                 </View>
               </View>
 
               <View className='at-article__section'>
+                <View className='at-article__h3'>订单最后更新时间</View>
+                <View className='at-article__p'>
+                  {util.formatDate(item.updated_at, "yyyy-MM-dd hh:mm:ss")}
+                </View>
+              </View>
+
+
+              <View className='at-article__section order-state'>
+                <View className='at-article__h1'>当前状态</View>
+                <View className='at-article__p'>
+                  {util.i18n_state1(item.state)}
+                </View>
+              </View>
+
+              <View className='at-article__section bottom-button'>
                 <AtButton type='secondary' size='normal'>预约</AtButton>
               </View>
 

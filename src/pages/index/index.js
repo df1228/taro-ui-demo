@@ -3,6 +3,7 @@ import { View, Image } from '@tarojs/components'
 import logoImg from '../../assets/images/logo_taro.png'
 import './index.scss'
 import { AtTabBar } from 'taro-ui'
+import util from '../../utils/util'
 
 export default class Index extends Taro.Component {
   config = {
@@ -44,13 +45,20 @@ export default class Index extends Taro.Component {
   }
 
   componentDidMount() {
+
+    Taro.showLoading({
+      title: '加载中'
+    })
+
     Taro.request({
       method: "get",
-      url: 'https://api.xsjd123.com/after_sales?order=created_at.desc'
+      url: 'https://api.xsjd123.com/after_sales?order=created_at.desc&state=in.(scheduled)'
     })
       .then(res => {
         console.log(res.data)
         this.setState({ orders: res.data })
+
+        Taro.hideLoading()
       })
   }
 
@@ -90,8 +98,8 @@ export default class Index extends Taro.Component {
               onClick={this.gotoPanel}
             >
               <View className='module-list__item-title'>{item.service_content}</View>
-              <View className='module-list__item-content'>{item.created_at}
-                <View className="module-list__item-state"> {item.state} </View>
+              <View className='module-list__item-content'>最后更新于 {util.formatDate(item.updated_at, "yyyy-MM-dd hh:mm:ss")}
+                <View className="module-list__item-state"> {util.i18n_state(item.state)} </View>
               </View>
             </View>
           ))}

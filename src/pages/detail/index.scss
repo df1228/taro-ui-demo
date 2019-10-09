@@ -163,7 +163,31 @@
   }
 }
 
-
 .at-article__section {
   margin-top: 30px;
+
+  .at-article__h3 {
+    display: inline-block;
+  }
+
+  .at-article__p {
+    float: right;
+  }
 }
+
+.at-article__section.order-state {
+  .at-article__h1 {
+    display: block;
+  }
+  .at-article__p {
+    clear: both;
+  }
+}
+
+.at-article__section.bottom-button {
+  clear: both;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+
