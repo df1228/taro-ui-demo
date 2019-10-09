@@ -15,7 +15,10 @@ class App extends Component {
       'pages/layout/index',
       'pages/navigation/index',
       'pages/navigation/indexes/index',
-      'pages/advanced/index'
+      'pages/advanced/index',
+      'pages/order/index',
+      'pages/detail/index',
+      'pages/profile/index'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -25,15 +28,15 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {}
+  componentDidMount() { }
 
-  componentDidShow () {}
+  componentDidShow() { }
 
-  componentDidHide () {}
+  componentDidHide() { }
 
-  componentCatchError () {}
+  componentCatchError() { }
 
-  render () {
+  render() {
     return <Index />
   }
 }

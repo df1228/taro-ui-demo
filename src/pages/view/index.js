@@ -24,7 +24,7 @@ export default class ViewPage extends Taro.Component {
     navigationBarTitleText: 'Taro UI'
   }
 
-  constructor () {
+  constructor() {
     super(...arguments)
     this.state = {
       isCurtainOpened: false,
@@ -65,13 +65,21 @@ export default class ViewPage extends Taro.Component {
     }
   }
 
-  handleCurtainClick (flag) {
+  componentWillMount() {
+    console.log('fuck')
+  }
+
+  componentDidMount() {
+    console.log("xx") // 输出 { id: 2, type: 'test' }
+  }
+
+  handleCurtainClick(flag) {
     this.setState({
       isCurtainOpened: flag,
     })
   }
 
-  handleLoadMoreClick () {
+  handleLoadMoreClick() {
     this.setState({
       loadMoreStatus: 'loading'
     })
@@ -82,13 +90,13 @@ export default class ViewPage extends Taro.Component {
     }, 2000)
   }
 
-  handleStepsChange (stateName, current) {
+  handleStepsChange(stateName, current) {
     this.setState({
       [stateName]: current
     })
   }
 
-  handleHollowClick (data) {
+  handleHollowClick(data) {
     const { hollowTagList } = this.state
     const findIndex = hollowTagList.findIndex(item => item.name === data.name)
 
@@ -96,7 +104,7 @@ export default class ViewPage extends Taro.Component {
     this.setState({ hollowTagList })
   }
 
-  handleSolidClick (data) {
+  handleSolidClick(data) {
     const { solidTagList } = this.state
     const findIndex = solidTagList.findIndex(item => item.name === data.name)
 
@@ -104,7 +112,7 @@ export default class ViewPage extends Taro.Component {
     this.setState({ solidTagList })
   }
 
-  handleHollowSmallClick (data) {
+  handleHollowSmallClick(data) {
     const { hollowTagList2 } = this.state
     const findIndex = hollowTagList2.findIndex(item => item.name === data.name)
 
@@ -112,7 +120,7 @@ export default class ViewPage extends Taro.Component {
     this.setState({ hollowTagList2 })
   }
 
-  handleSolidSmallClick (data) {
+  handleSolidSmallClick(data) {
     const { solidTagList2 } = this.state
     const findIndex = solidTagList2.findIndex(item => item.name === data.name)
 
@@ -120,7 +128,7 @@ export default class ViewPage extends Taro.Component {
     this.setState({ solidTagList2 })
   }
 
-  render () {
+  render() {
     const { isCurtainOpened, loadMoreStatus } = this.state
     const avatarImg = 'http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'
     const dot = '···'

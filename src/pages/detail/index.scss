@@ -5,6 +5,11 @@
 
 @import "~taro-ui/dist/style/components/icon.scss";
 
+@import "~taro-ui/dist/style/components/article.scss";
+
+
+@import "~taro-ui/dist/style/components/button.scss";
+
 .page {
   position: relative;
   background-color: #FDFDFD;
@@ -44,10 +49,6 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-
-    .order {
-      width: 100%;
-    }
 
     &__item {
       position: relative;
@@ -163,8 +164,6 @@
 }
 
 
-.module-list__item-state {
-  display: block;
-  float: right;
-  color: red;
+.at-article__section {
+  margin-top: 30px;
 }
