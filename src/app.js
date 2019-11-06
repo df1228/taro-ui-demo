@@ -19,10 +19,11 @@ class App extends Component {
       'pages/advanced/index',
       'pages/order/index',
       'pages/detail/index',
-      'pages/profile/index',
       'pages/bindPhone/index',
       'pages/reserve/index',
       'pages/complete/index',
+      'pages/profile/index',
+      'pages/settlement/index',
 
     ],
     window: {
@@ -59,9 +60,9 @@ class App extends Component {
     if (this.state.userInfo.user_id == undefined) {
       console.log("if unanthenticated and not in bindPhone page, redirect to auth")
       console.log(window.location.hash)
-      // if (window.location.hash != "#/pages/bindPhone/index") {
-      //   window.location.href = "http://wx.xsjd123.com/auth"
-      // }
+      if (window.location.hash != "#/pages/bindPhone/index") {
+        window.location.href = "http://wx.xsjd123.com/auth"
+      }
     }
   }
 

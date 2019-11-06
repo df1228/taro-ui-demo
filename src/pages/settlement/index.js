@@ -1,0 +1,173 @@
+import Taro from '@tarojs/taro'
+import { View, Image } from '@tarojs/components'
+import logoImg from '../../assets/images/logo_taro.png'
+import './index.scss'
+import { AtTabBar, AtAvatar } from 'taro-ui'
+import util from '../../utils/util'
+
+export default class OrderPage extends Taro.Component {
+  config = {
+    navigationBarTitleText: 'Taro UI'
+  }
+
+  constructor() {
+    super(...arguments)
+    this.state = {
+      current: 2,
+      items: [],
+      todosCount: 0,
+      stype: ""
+    }
+  }
+
+  handleClick(value) {
+    this.setState({
+      current: value
+    })
+
+    if (value == 1) {
+      // // 跳转到目的页面，打开新页面
+      Taro.redirectTo({
+        url: '/pages/order/index'
+      })
+    } else if (value == 2) {
+      Taro.redirectTo({
+        url: '/pages/profile/index'
+      })
+    } else {
+      Taro.navigateTo({
+        url: '/pages/index/index'
+      })
+    }
+  }
+
+  componentWillMount() {
+    let info = util.getCookieValueByName("i")
+    if (info != "") {
+      let userInfo = JSON.parse(window.atob(info))
+      console.log(userInfo)
+      this.setState({
+        userInfo: userInfo
+      }, () => {
+        console.log("userInfo loaded from cookie is :")
+        console.log(this.state.userInfo)
+      })
+    }
+
+    console.log(this.$router.params)
+    this.setState({
+      stype: this.$router.params.type
+    })
+  }
+
+  componentDidMount() {
+
+    Taro.showLoading({
+      title: '加载中'
+    })
+
+    console.log(this.state)
+
+    var { stype } = this.state
+    var url = "http://api.xsjd123.com/settlements?order=updated_at.desc&user_id=eq." + this.state.userInfo.user_id
+
+    if (stype == "award") {
+      url = "http://api.xsjd123.com/settlements?order=updated_at.desc&direction=eq.奖励&user_id=eq." + this.state.userInfo.user_id
+    } else if (stype == "fine") {
+      url = "http://api.xsjd123.com/settlements?order=updated_at.desc&direction=eq.罚款&user_id=eq." + this.state.userInfo.user_id
+    } else if (stype == "income") {
+      url = "http://api.xsjd123.com/settlements?order=updated_at.desc&direction=eq.收入&user_id=eq." + this.state.userInfo.user_id
+    } else {
+      url = "http://api.xsjd123.com/settlements?order=updated_at.desc&user_id=eq." + this.state.userInfo.user_id
+    }
+
+    console.log(url)
+
+    Taro.request({
+      method: "get",
+      url: url
+    })
+      .then(res => {
+        console.log(res.data)
+        this.setState({ items: res.data })
+        this.setState({ todosCount: "new" })
+        Taro.hideLoading()
+      })
+  }
+
+  onShareAppMessage() {
+    return {
+      title: 'Taro UI',
+      path: '/pages/index/index',
+      imageUrl: 'http://storage.360buyimg.com/mtd/home/share1535013100318.jpg'
+    }
+  }
+
+  gotoPanel = e => {
+    const { aftersale_id } = e.currentTarget.dataset
+    if (aftersale_id != 0) {
+      Taro.navigateTo({
+        // url: `/pages/detail/index?id=${id.toLowerCase()}`
+        url: `/pages/detail/index?id=${aftersale_id.toLowerCase()}`
+      })
+    }
+  }
+
+  handleAftersaleLink = e => {
+    if (e != 0) {
+      var url = "/#/pages/detail/index?id=" + e
+      return <a href={url}>&nbsp;&nbsp;来源于服务单#{e}</a>
+    }
+  }
+
+  handleListTitle = item => {
+    if (item.direction == "罚款" || item.direction == "提现") {
+      item.amount = -item.amount
+    }
+
+    return item.direction + " " + item.amount + " "
+  }
+
+  render() {
+    const { items } = this.state
+    const { todosCount } = this.state
+    var tabs = [
+      { title: '待处理', iconType: 'bullet-list', text: todosCount },
+      { title: '所有订单', iconType: 'list' },
+      { title: '我的', iconType: 'folder' }
+    ]
+
+    return (
+      <View className='page page-index settlements'>
+        {/* <View className="avatar">
+          <AtAvatar circle size="large" image={this.state.userInfo.headimgurl}></AtAvatar>
+        </View> */}
+        <View className='page-title'>所有结算明细</View>
+        <View className='module-list'>
+          {items.map((item, index) => (
+            <View
+              className='module-list__item order'
+              key={index}
+              data-id={item.id}
+              data-aftersale-id={item.aftersale_id}
+              data-name={item.direction}
+              onClick={this.gotoPanel}
+            >
+              <View className='module-list__item-title'>{this.handleListTitle(item)} {this.handleAftersaleLink(item.aftersale_id)}</View>
+              <View className='module-list__item-content'>最后更新于 {util.formatDate(item.updated_at, "yyyy-MM-dd hh:mm:ss")}
+                <View className="module-list__item-state"> {util.i18n_state(item.state)} </View>
+              </View>
+            </View>
+          ))}
+
+          <AtTabBar
+            fixed
+            tabList={tabs}
+            onClick={this.handleClick.bind(this)}
+            current={this.state.current}
+          />
+        </View>
+      </View>
+    )
+  }
+}

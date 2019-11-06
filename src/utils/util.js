@@ -15,6 +15,10 @@ function i18n_state(state) {
       return "已冻结"
     case "completed":
       return "已解冻"
+    case "withdrawed":
+      return "已提现"
+    case "free":
+      return "已解冻"
     default:
       return state;
     // break;

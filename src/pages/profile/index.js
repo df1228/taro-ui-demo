@@ -12,8 +12,11 @@ import {
   AtSteps,
   AtTag,
   AtTimeline,
+  AtList,
+  AtListItem,
   AtTabBar,
 } from 'taro-ui'
+import util from '../../utils/util'
 import DocsHeader from '../components/doc-header'
 import NavigatorBtn from '../components/navigator-btn'
 import './index.scss'
@@ -29,43 +32,49 @@ export default class ProfilePage extends Taro.Component {
     super(...arguments)
     this.state = {
       current: 2,
-
-      isCurtainOpened: false,
-      loadMoreStatus: 'more',
-      stepsCurrent1: 0,
-      stepsCurrent2: 0,
-      stepsCurrent3: 0,
-      stepsCurrent4: 1,
-      imgUrls: [
-        'https://img10.360buyimg.com/babel/s700x360_jfs/t25855/203/725883724/96703/5a598a0f/5b7a22e1Nfd6ba344.jpg!q90!cc_350x180',
-        'https://img11.360buyimg.com/babel/s700x360_jfs/t1/4776/39/2280/143162/5b9642a5E83bcda10/d93064343eb12276.jpg!q90!cc_350x180',
-        'https://img14.360buyimg.com/babel/s700x360_jfs/t1/4099/12/2578/101668/5b971b4bE65ae279d/89dd1764797acfd9.jpg!q90!cc_350x180'
-      ],
-      hollowTagList: [
-        { name: '标签1', active: false },
-        { name: '标签2', active: false },
-        { name: '标签3', active: true },
-        { name: '标签4', active: true }
-      ],
-      solidTagList: [
-        { name: '标签1', active: false },
-        { name: '标签2', active: false },
-        { name: '标签3', active: true },
-        { name: '标签4', active: true }
-      ],
-      hollowTagList2: [
-        { name: '标签1', active: false },
-        { name: '标签2', active: false },
-        { name: '标签3', active: true },
-        { name: '标签4', active: true }
-      ],
-      solidTagList2: [
-        { name: '标签1', active: false },
-        { name: '标签2', active: false },
-        { name: '标签3', active: true },
-        { name: '标签4', active: true }
-      ],
+      item: {},
+      loading: true,
     }
+  }
+
+  componentWillMount() {
+    let info = util.getCookieValueByName("i")
+    if (info != "") {
+      let userInfo = JSON.parse(window.atob(info))
+      console.log(userInfo)
+      this.setState({
+        userInfo: userInfo
+      }, () => {
+        console.log("userInfo loaded from cookie is :")
+        console.log(this.state.userInfo)
+      })
+    }
+  }
+
+  componentDidMount() {
+
+    Taro.showLoading({
+      title: '加载中'
+    })
+
+    console.log(this.state)
+    var url = "http://api.xsjd123.com/balances?user_id=eq." + this.state.userInfo.user_id
+    console.log(url)
+
+
+    Taro.request({
+      method: "get",
+      url: url
+    })
+      .then(res => {
+        console.log("fuck")
+        console.log(res.data[0])
+        this.setState({ item: res.data[0] })
+        Taro.hideLoading()
+
+
+        console.log(this.state.item)
+      })
   }
 
   handleClick(value) {
@@ -93,12 +102,6 @@ export default class ProfilePage extends Taro.Component {
     }
   }
 
-  handleCurtainClick(flag) {
-    this.setState({
-      isCurtainOpened: flag,
-    })
-  }
-
   handleLoadMoreClick() {
     this.setState({
       loadMoreStatus: 'loading'
@@ -110,56 +113,72 @@ export default class ProfilePage extends Taro.Component {
     }, 2000)
   }
 
-  handleStepsChange(stateName, current) {
-    this.setState({
-      [stateName]: current
+  handleSettlementsClick(data) {
+    Taro.redirectTo({
+      url: "/pages/settlement/index"
+    })
+  }
+  handleAwardsClick(data) {
+    Taro.redirectTo({
+      url: "/pages/settlement/index?type=award"
+    })
+  }
+  handleIncomesClick(data) {
+    Taro.redirectTo({
+      url: "/pages/settlement/index?type=income"
+    })
+  }
+  handleFinesClick(data) {
+    Taro.redirectTo({
+      url: "/pages/settlement/index?type=fine"
     })
   }
 
-  handleHollowClick(data) {
-    const { hollowTagList } = this.state
-    const findIndex = hollowTagList.findIndex(item => item.name === data.name)
-
-    hollowTagList[findIndex].active = !hollowTagList[findIndex].active
-    this.setState({ hollowTagList })
-  }
-
-  handleSolidClick(data) {
-    const { solidTagList } = this.state
-    const findIndex = solidTagList.findIndex(item => item.name === data.name)
-
-    solidTagList[findIndex].active = !solidTagList[findIndex].active
-    this.setState({ solidTagList })
-  }
-
-  handleHollowSmallClick(data) {
-    const { hollowTagList2 } = this.state
-    const findIndex = hollowTagList2.findIndex(item => item.name === data.name)
-
-    hollowTagList2[findIndex].active = !hollowTagList2[findIndex].active
-    this.setState({ hollowTagList2 })
-  }
-
-  handleSolidSmallClick(data) {
-    const { solidTagList2 } = this.state
-    const findIndex = solidTagList2.findIndex(item => item.name === data.name)
-
-    solidTagList2[findIndex].active = !solidTagList2[findIndex].active
-    this.setState({ solidTagList2 })
+  handleAmount(d) {
+    if (d == 0) {
+      return "0"
+    } else {
+      return d
+    }
   }
 
   render() {
-    const { isCurtainOpened, loadMoreStatus } = this.state
-    const avatarImg = 'http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'
-    const dot = '···'
+    const { item } = this.state
 
     return (
-      <View className='page profile'>
+      <View className='page page-index profile'>
 
         <View className="avatar">
-          <AtAvatar image='https://jdc.jd.com/img/200'></AtAvatar>
+          <AtAvatar circle size="large" image={this.state.userInfo.headimgurl}></AtAvatar>
         </View>
 
+        {/* <View className='logo'>
+          <Image src='https://jdc.jd.com/img/200' className='img' mode='widthFix' />
+        </View> */}
+
+        <AtList>
+          <AtListItem title='剩余可提现' extraText={this.handleAmount(item.free_amount)} arrow='right' />
+          <AtListItem title='冻结中' extraText={this.handleAmount(item.frozen_amount)} arrow='right' />
+          <AtListItem title='已提现' extraText={this.handleAmount(item.withdraw_amount)} arrow='right' />
+          <AtListItem title='奖励' extraText={this.handleAmount(item.award_amount)} arrow='right' onClick={this.handleAwardsClick.bind(this)} />
+          <AtListItem title='罚款' extraText={this.handleAmount(item.fine_amount)} arrow='right' onClick={this.handleFinesClick.bind(this)} />
+          <AtListItem title='历史总收入' extraText={this.handleAmount(item.total_amount)} arrow='right' onClick={this.handleIncomesClick.bind(this)} />
+          <AtListItem title='所有结算明细' arrow='right' onClick={this.handleSettlementsClick.bind(this)} />
+        </AtList>
+
+        <View className='at-article__content remark'>
+          <View className='at-article__section'>
+            <View className='at-article__p'>
+              每完成一笔服务单之后，通过审核之后会有一笔服务费用转入冻结期，冻结期过后，会自动解冻，即可提现。
+            </View>
+            <View className='at-article__p'>
+              历史总收入 不一定等于  冻结中 + 剩余可提现 - 已提现 （在没有奖励和罚款的情况下是相等的）
+            </View>
+            <View className='at-article__p'>
+              剩余可提现 = 历史总收入 + 奖励 - 已提现  - 罚款
+            </View>
+          </View>
+        </View>
 
         <AtTabBar
           fixed

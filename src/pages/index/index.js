@@ -36,7 +36,7 @@ export default class Index extends Taro.Component {
       // })
     } else if (value == 2) {
       Taro.redirectTo({
-        url: '/pages/view/index'
+        url: '/pages/profile/index'
       })
     } else {
       Taro.navigateTo({

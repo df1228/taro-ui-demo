@@ -163,13 +163,27 @@
 }
 
 
+.module-list__item-state {
+  display: block;
+  float: right;
+  color: red;
+}
 
-.profile {
+
+.page-index {
+  .module-list {
+    padding-bottom: 3em;
+  }
+}
+
+
+.settlements {
+  .module-list__item-title {
+    font-weight: normal;
+    font-size: 30px;
+  }
+
   .avatar {
     margin: 50px auto 100px auto ;
-  }
-  .remark {
-    margin-bottom: 100px;
-    padding-bottom: 100px;
   }
 }
