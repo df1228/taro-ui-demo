@@ -16,7 +16,8 @@ export default class OrderPage extends Taro.Component {
       current: 2,
       items: [],
       todosCount: 0,
-      stype: ""
+      stype: "",
+      pageTitle: ""
     }
   }
 
@@ -70,16 +71,24 @@ export default class OrderPage extends Taro.Component {
 
     var { stype } = this.state
     var url = "http://api.xsjd123.com/settlements?order=updated_at.desc&user_id=eq." + this.state.userInfo.user_id
-
+    var pageTitle = "所有明细"
     if (stype == "award") {
       url = "http://api.xsjd123.com/settlements?order=updated_at.desc&direction=eq.奖励&user_id=eq." + this.state.userInfo.user_id
+      pageTitle = "所有奖励"
     } else if (stype == "fine") {
       url = "http://api.xsjd123.com/settlements?order=updated_at.desc&direction=eq.罚款&user_id=eq." + this.state.userInfo.user_id
+      pageTitle = "所有罚款"
     } else if (stype == "income") {
       url = "http://api.xsjd123.com/settlements?order=updated_at.desc&direction=eq.收入&user_id=eq." + this.state.userInfo.user_id
+      pageTitle = "所有来自服务单的收入"
     } else {
       url = "http://api.xsjd123.com/settlements?order=updated_at.desc&user_id=eq." + this.state.userInfo.user_id
+      var pageTitle = "所有明细"
     }
+
+    this.setState({
+      pageTitle: pageTitle
+    })
 
     console.log(url)
 
@@ -142,7 +151,7 @@ export default class OrderPage extends Taro.Component {
         {/* <View className="avatar">
           <AtAvatar circle size="large" image={this.state.userInfo.headimgurl}></AtAvatar>
         </View> */}
-        <View className='page-title'>所有结算明细</View>
+        <View className='page-title'>{this.state.pageTitle}</View>
         <View className='module-list'>
           {items.map((item, index) => (
             <View
@@ -150,8 +159,6 @@ export default class OrderPage extends Taro.Component {
               key={index}
               data-id={item.id}
               data-aftersale-id={item.aftersale_id}
-              data-name={item.direction}
-              onClick={this.gotoPanel}
             >
               <View className='module-list__item-title'>{this.handleListTitle(item)} {this.handleAftersaleLink(item.aftersale_id)}</View>
               <View className='module-list__item-content'>最后更新于 {util.formatDate(item.updated_at, "yyyy-MM-dd hh:mm:ss")}

@@ -30,8 +30,12 @@ function i18n_state1(state) {
   switch (state) {
     case "scheduled":
       return "该订单已经指派给你了，请您和客户预约具体上门服务时间"
+    case "overdue":
+      return "已超时"
     case "processing":
       return "待处理"
+    case "processed":
+      return "待审核"
     case "audited":
       return "已审核"
     case "frozen":
