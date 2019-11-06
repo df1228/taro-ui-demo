@@ -12,6 +12,7 @@ import {
   AtSteps,
   AtTag,
   AtTimeline,
+  AtGrid,
 } from 'taro-ui'
 import DocsHeader from '../components/doc-header'
 import NavigatorBtn from '../components/navigator-btn'
@@ -139,17 +140,73 @@ export default class ViewPage extends Taro.Component {
         <DocsHeader title='视图' desc='8 个组件'></DocsHeader>
         {/* E Header */}
 
+
         {/* S Body */}
         <View className='doc-body'>
-          {/* Article */}
+
+          <AtAvatar image='https://jdc.jd.com/img/200'></AtAvatar>
+
           <View className='panel'>
-            <View className='panel__title'>Article 文章</View>
             <View className='panel__content'>
-              <View className='example-item'>
-                <NavigatorBtn parent='view' name='article'></NavigatorBtn>
+              <View>冻结中</View>
+              <View>
+                150
+              </View>
+            </View>
+
+            <View className='panel__content'>
+              <View>可提现</View>
+              <View>
+                150
               </View>
             </View>
           </View>
+
+          <View className='panel'>
+            <View>
+              <View>冻结中</View>
+              <View>
+                150
+              </View>
+            </View>
+
+            <View>
+              <View>可提现</View>
+              <View>
+                150
+              </View>
+            </View>
+          </View>
+
+
+          <AtGrid data={
+            [
+              {
+                image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
+                value: '冻结中: 500'
+              },
+              {
+                image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
+                value: '可提现: 1000'
+              },
+              {
+                image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
+                value: '历史总收入: 1500'
+              },
+              {
+                image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
+                value: '奖励: 10'
+              },
+              {
+                image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
+                value: '罚款: 20'
+              },
+              {
+                image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
+                value: '已提现: 0'
+              }
+            ]
+          } />
 
           {/* Avatar */}
           <View className='panel'>

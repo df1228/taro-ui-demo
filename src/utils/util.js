@@ -1,17 +1,27 @@
+// 用在列表页
 function i18n_state(state) {
   switch (state) {
     case "scheduled":
       return "已指派"
+    case "overdue":
+      return "已超时"
     case "processing":
       return "待处理"
+    case "processed":
+      return "待审核"
     case "audited":
       return "已审核"
+    case "frozen":
+      return "已冻结"
+    case "completed":
+      return "已解冻"
     default:
       return state;
     // break;
   }
 }
 
+// 用在详情页
 function i18n_state1(state) {
   switch (state) {
     case "scheduled":
@@ -20,6 +30,10 @@ function i18n_state1(state) {
       return "待处理"
     case "audited":
       return "已审核"
+    case "frozen":
+      return "已冻结, 该订单的费用暂时冻结不可结算"
+    case "completed":
+      return "已解冻, 该订单的费用已可结算"
     default:
       return state;
     // break;
@@ -54,5 +68,29 @@ function formatDate(s, fmt) {
 module.exports = {
   i18n_state: i18n_state,
   formatDate: formatDate,
-  i18n_state1: i18n_state1
+  i18n_state1: i18n_state1,
+  getCookieValueByName: getCookieValueByName,
+}
+
+
+// get cookie value by name
+function getCookieValueByName(a) {
+  var b = document.cookie.match('(^|[^;]+)\\s*' + a + '\\s*=\\s*([^;]+)');
+  return b ? b.pop() : '';
+}
+
+
+function loadCookieToState() {
+  let info = getCookieValueByName("i")
+  if (info != "") {
+    let userInfo = JSON.parse(window.atob(info))
+    console.log(userInfo)
+    console.log("before set state")
+    this.setState((state) => {
+      return { userInfo: userInfo }
+    }, () => {
+      console.log("cookie loaded")
+      console.log(this.state.userInfo)
+    })
+  }
 }

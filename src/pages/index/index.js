@@ -12,10 +12,11 @@ export default class Index extends Taro.Component {
 
   constructor() {
     super(...arguments)
-    let orders = null
     this.state = {
       current: 0,
-      orders: []
+      userInfo: null,
+      orders: [],
+      todosCount: 0,
     }
   }
 
@@ -44,19 +45,37 @@ export default class Index extends Taro.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
+    let info = util.getCookieValueByName("i")
+    if (info != "") {
+      let userInfo = JSON.parse(window.atob(info))
+      console.log(userInfo)
+      console.log("before set state")
+      this.setState((state) => {
+        return { userInfo: userInfo }
+      }, () => {
+        console.log("cookie loaded")
+        console.log(this.state.userInfo)
+      })
+    }
 
+    console.log("userInfo in Index page")
+    console.log(this.state.userInfo)
+  }
+
+  componentDidMount() {
     Taro.showLoading({
       title: '加载中'
     })
 
     Taro.request({
       method: "get",
-      url: 'https://api.xsjd123.com/after_sales?order=created_at.desc&state=in.(scheduled)'
+      url: 'http://api.xsjd123.com/aftersales?order=created_at.desc&state=in.(scheduled,processing)&user_id=eq.' + this.state.userInfo.user_id
     })
       .then(res => {
         console.log(res.data)
         this.setState({ orders: res.data })
+        this.setState({ count: res.data.length })
 
         Taro.hideLoading()
       })
@@ -80,7 +99,12 @@ export default class Index extends Taro.Component {
 
   render() {
     const { orders } = this.state
-
+    const { todosCount } = this.state
+    var tabs = [
+      { title: '待处理', iconType: 'bullet-list', text: todosCount },
+      { title: '所有订单', iconType: 'list' },
+      { title: '我的', iconType: 'folder' }
+    ]
     return (
       <View className='page page-index'>
         {/* <View className='logo'>
@@ -104,13 +128,11 @@ export default class Index extends Taro.Component {
             </View>
           ))}
 
+
+
           <AtTabBar
             fixed
-            tabList={[
-              { title: '待办事项', iconType: 'bullet-list', text: 'new' },
-              { title: '所有订单', iconType: 'list' },
-              { title: '我的', iconType: 'folder', text: '100', max: '99' }
-            ]}
+            tabList={tabs}
             onClick={this.handleClick.bind(this)}
             current={this.state.current}
           />

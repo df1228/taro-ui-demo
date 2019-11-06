@@ -23,8 +23,35 @@ export default class BindPhonePage extends Taro.Component {
     })
   }
 
+  // get cookie value by name
+  getCookieValue(a) {
+    var b = document.cookie.match('(^|[^;]+)\\s*' + a + '\\s*=\\s*([^;]+)');
+    return b ? b.pop() : '';
+  }
+
   handleSubmit() {
     console.log(this.state.mobile)
+    console.log(this.getCookieValue("u"))
+    Taro.showLoading({
+      title: '提交中'
+    })
+    let url = "http://wx.xsjd123.com/bindPhone"
+    let data = {
+      mobile_phone: this.state.mobile,
+      cookie: this.getCookieValue("u")
+    }
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then((res) => { return res.json() })
+      .then(data => {
+        console.log(data)
+        Taro.hideLoading()
+        if (data.status == "ok") {
+          window.location.href = "http://mp.xsjd123.com"
+        }
+      })
   }
   render() {
     return (

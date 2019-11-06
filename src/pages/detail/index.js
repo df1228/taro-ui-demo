@@ -26,7 +26,7 @@ export default class DetailPage extends Taro.Component {
         "customer_address": "客户地址",
         "service_type": "服务类型",
         "service_content": "服务内容",
-        "reserverd_service_time": "",
+        "reserved_service_time": "",
         "source": "海尔",
         "remark": "",
         "user_id": null,
@@ -50,7 +50,7 @@ export default class DetailPage extends Taro.Component {
   }
 
   componentDidMount() {
-    let url = "https://api.xsjd123.com/after_sales?id=eq." + this.state.id
+    let url = "http://api.xsjd123.com/aftersales?id=eq." + this.state.id
     console.log(url)
     Taro.request({
       method: "get",
@@ -89,6 +89,18 @@ export default class DetailPage extends Taro.Component {
     }
   }
 
+  handleReserve() {
+    Taro.navigateTo({
+      url: '/pages/reserve/index?id=' + this.state.id
+    })
+  }
+
+  handleComplete() {
+    Taro.navigateTo({
+      url: '/pages/complete/index?id=' + this.state.id
+    })
+  }
+
   onShareAppMessage() {
     return {
       title: 'Taro UI',
@@ -107,12 +119,16 @@ export default class DetailPage extends Taro.Component {
 
   render() {
     const { item } = this.state
-
-    let status = null
-    if (1) {
-      status = <Text>已登录</Text>
+    let status = item.state
+    let btn = null
+    if (status == "scheduled") {
+      btn = <AtButton type='secondary' size='normal' onClick={this.handleReserve.bind(this)}>填写预约时间</AtButton>
+    } else if (status == "processing") {
+      btn = <AtButton type='secondary' size='normal' onClick={this.handleComplete.bind(this)}>拍照上传、确认服务完成</AtButton>
+    } else if (status == "processed") {
+      btn = ""
     } else {
-      status = <Text>未登录</Text>
+      btn = ""
     }
 
     return (
@@ -121,13 +137,13 @@ export default class DetailPage extends Taro.Component {
         <View className='doc-body'>
           <View className='at-article'>
             <View className='at-article__h1'>{item.service_content}</View>
-            <View className='at-article__info'>2019-10-11&nbsp;&nbsp;&nbsp;这是作者</View>
+            <View className='at-article__info'>{util.formatDate(item.created_at, "yyyy-MM-dd hh:mm:ss")}&nbsp;&nbsp;&nbsp; {item.service_type}</View>
             <View className='at-article__content'>
 
               <View className='at-article__section'>
-                <View className='at-article__h3'>客户地址</View>
+                <View className='at-article__h3'>客户姓名</View>
                 <View className='at-article__p'>
-                  {item.customer_address}
+                  {item.customer_name}
                 </View>
               </View>
 
@@ -139,16 +155,45 @@ export default class DetailPage extends Taro.Component {
               </View>
 
               <View className='at-article__section'>
-                <View className='at-article__h3'>客户姓名</View>
+                <View className='at-article__h3'>客户地址</View>
                 <View className='at-article__p'>
-                  {item.customer_name}
+                  {item.customer_address}
                 </View>
               </View>
 
               <View className='at-article__section'>
+                <View className='at-article__h3'>服务内容</View>
+                <View className='at-article__p'>
+                  {item.service_content}
+                </View>
+              </View>
+
+              <View className='at-article__section'>
+                <View className='at-article__h3'>来源</View>
+                <View className='at-article__p'>
+                  {item.source}
+                </View>
+              </View>
+
+              <View className='at-article__section'>
+                <View className='at-article__h3'>品牌</View>
+                <View className='at-article__p'>
+                  {item.brand}
+                </View>
+              </View>
+
+
+              <View className='at-article__section'>
                 <View className='at-article__h3'>信息员备注</View>
                 <View className='at-article__p'>
-                  客户希望在明天下午或者后天上午完成安装
+                  {item.remark}
+                </View>
+              </View>
+
+              <View className='at-article__section'>
+                <View className='at-article__h3'>费用</View>
+                <View className='at-article__p'>
+                  {item.fee}
                 </View>
               </View>
 
@@ -175,14 +220,14 @@ export default class DetailPage extends Taro.Component {
               </View>
 
               <View className='at-article__section order-state'>
-                <View className='at-article__h1'>当前状态</View>
-                <View className='at-article__p'>
+                <View className='at-article__h3'>当前状态</View>
+                <View className='at-article__p' style="color: red">
                   {util.i18n_state1(item.state)}
                 </View>
               </View>
 
               <View className='at-article__section bottom-button'>
-                <AtButton type='secondary' size='normal'>确认预约时间</AtButton>
+                {btn}
               </View>
 
             </View>
@@ -192,7 +237,7 @@ export default class DetailPage extends Taro.Component {
         <AtTabBar
           fixed
           tabList={[
-            { title: '待办事项', iconType: 'bullet-list' },
+            { title: '待处理', iconType: 'bullet-list' },
             { title: '所有', iconType: 'list' },
             { title: '我的结算', iconType: 'folder' }
           ]}

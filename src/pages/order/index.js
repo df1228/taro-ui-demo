@@ -14,7 +14,8 @@ export default class OrderPage extends Taro.Component {
     super(...arguments)
     this.state = {
       current: 1,
-      orders: []
+      orders: [],
+      todosCount: 0,
     }
   }
 
@@ -34,11 +35,25 @@ export default class OrderPage extends Taro.Component {
       // })
     } else if (value == 2) {
       Taro.redirectTo({
-        url: '/pages/view/index'
+        url: '/pages/profile/index'
       })
     } else {
       Taro.navigateTo({
         url: '/pages/index/index'
+      })
+    }
+  }
+
+  componentWillMount() {
+    let info = util.getCookieValueByName("i")
+    if (info != "") {
+      let userInfo = JSON.parse(window.atob(info))
+      console.log(userInfo)
+      this.setState({
+        userInfo: userInfo
+      }, () => {
+        console.log("userInfo loaded from cookie is :")
+        console.log(this.state.userInfo)
       })
     }
   }
@@ -51,12 +66,11 @@ export default class OrderPage extends Taro.Component {
 
     Taro.request({
       method: "get",
-      url: 'https://api.xsjd123.com/after_sales?order=created_at.desc'
+      url: 'http://api.xsjd123.com/aftersales?order=created_at.desc&user_id=eq.' + this.state.userInfo.user_id
     })
       .then(res => {
         console.log(res.data)
         this.setState({ orders: res.data })
-
         Taro.hideLoading()
       })
   }
@@ -79,7 +93,12 @@ export default class OrderPage extends Taro.Component {
 
   render() {
     const { orders } = this.state
-
+    const { todosCount } = this.state
+    var tabs = [
+      { title: '待处理', iconType: 'bullet-list', text: todosCount },
+      { title: '所有订单', iconType: 'list' },
+      { title: '我的', iconType: 'folder' }
+    ]
     return (
       <View className='page page-index'>
         {/* <View className='logo'>
@@ -105,11 +124,7 @@ export default class OrderPage extends Taro.Component {
 
           <AtTabBar
             fixed
-            tabList={[
-              { title: '待办事项', iconType: 'bullet-list', text: 'new' },
-              { title: '所有订单', iconType: 'list' },
-              { title: '我的', iconType: 'folder', text: '100', max: '99' }
-            ]}
+            tabList={tabs}
             onClick={this.handleClick.bind(this)}
             current={this.state.current}
           />

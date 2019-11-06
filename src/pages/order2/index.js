@@ -121,8 +121,8 @@ export default class OrderPage extends Taro.Component {
           <AtTabBar
             fixed
             tabList={[
-              { title: '待办', iconType: 'bullet-list' },
-              { title: '所有', iconType: 'list' },
+              { title: '待处理', iconType: 'bullet-list' },
+              { title: '所有订单', iconType: 'list' },
               { title: '我的', iconType: 'folder' }
             ]}
             onClick={this.handleClick.bind(this)}

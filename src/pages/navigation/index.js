@@ -18,7 +18,7 @@ export default class NavigationPage extends Taro.Component {
     navigationBarTitleText: 'Taro UI'
   }
 
-  constructor () {
+  constructor() {
     super(...arguments)
     this.state = {
       tabbarCurrent: 0,
@@ -29,39 +29,39 @@ export default class NavigationPage extends Taro.Component {
     }
   }
 
-  leftDrawerClick () {
+  leftDrawerClick() {
     this.setState({
       leftDrawerShow: !this.state.leftDrawerShow,
     })
   }
 
-  onDrawerClose () {
+  onDrawerClose() {
     this.setState({
       leftDrawerShow: !this.state.leftDrawerShow,
     })
   }
 
-  handleTabBarClick (value) {
+  handleTabBarClick(value) {
     this.setState({
       tabbarCurrent: value
     })
   }
 
-  handleTabsClick (stateName, value) {
+  handleTabsClick(stateName, value) {
     this.setState({
       [stateName]: value
     })
   }
 
-  handleSegmenentedClick (value) {
+  handleSegmenentedClick(value) {
     this.setState({
       segmentedValue: value
     })
   }
 
-  render () {
+  render() {
     const { tabsListValue, tabsListValue2, segmentedValue } = this.state
-    const tabbarList = [{ title: '待办事项', iconType: 'bullet-list', text: 'new' }, { title: '拍照', iconType: 'camera' }, { title: '文件夹', iconType: 'folder', text: '100', max: '99' }]
+    const tabbarList = [{ title: '待处理', iconType: 'bullet-list', text: 'new' }, { title: '拍照', iconType: 'camera' }, { title: '文件夹', iconType: 'folder', text: '100', max: '99' }]
     const tabList = [
       { title: '标签页1' },
       { title: '标签页2' },
