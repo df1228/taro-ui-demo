@@ -12,15 +12,13 @@ import {
   AtSteps,
   AtTag,
   AtTimeline,
+  AtTabBar,
 } from 'taro-ui'
 import DocsHeader from '../components/doc-header'
 import NavigatorBtn from '../components/navigator-btn'
 import './index.scss'
 
 import curtainPng from '../../assets/images/curtain.png'
-
-
-import { AtTabBar } from 'taro-ui'
 
 export default class ProfilePage extends Taro.Component {
   config = {
@@ -156,18 +154,12 @@ export default class ProfilePage extends Taro.Component {
     const dot = '···'
 
     return (
-      <View className='page'>
-        <DocsHeader title='结算'></DocsHeader>
+      <View className='page profile'>
 
-        {/* Divider */}
-        <View className='panel'>
-          <View className='panel__content'>
-            {/* 一般用法 */}
-            <View className='example-item'>
-              <AtDivider content='开发中' />
-            </View>
-          </View>
+        <View className="avatar">
+          <AtAvatar image='https://jdc.jd.com/img/200'></AtAvatar>
         </View>
+
 
         <AtTabBar
           fixed

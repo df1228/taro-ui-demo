@@ -2,8 +2,10 @@ import Taro, { useCallback } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import './index.scss'
 
-import { AtTabBar } from 'taro-ui'
-import { AtButton } from 'taro-ui'
+import {
+  AtTabBar,
+  AtButton
+} from 'taro-ui'
 
 import util from '../../utils/util'
 
