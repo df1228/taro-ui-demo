@@ -81,6 +81,12 @@ export default class OrderPage extends Taro.Component {
     } else if (stype == "income") {
       url = "http://api.xsjd123.com/settlements?order=updated_at.desc&direction=eq.收入&user_id=eq." + this.state.userInfo.user_id
       pageTitle = "所有来自服务单的收入"
+    } else if (stype == "frozen") {
+      url = "http://api.xsjd123.com/settlements?order=updated_at.desc&direction=eq.收入&state=eq.frozen&user_id=eq." + this.state.userInfo.user_id
+      pageTitle = "冻结中"
+    } else if (stype == "withdraw") {
+      url = "http://api.xsjd123.com/settlements?order=updated_at.desc&direction=eq.%E6%8F%90%E7%8E%B0&user_id=eq." + this.state.userInfo.user_id
+      pageTitle = "提现历史"
     } else {
       url = "http://api.xsjd123.com/settlements?order=updated_at.desc&user_id=eq." + this.state.userInfo.user_id
       var pageTitle = "所有明细"
@@ -104,23 +110,15 @@ export default class OrderPage extends Taro.Component {
       })
   }
 
-  onShareAppMessage() {
-    return {
-      title: 'Taro UI',
-      path: '/pages/index/index',
-      imageUrl: 'http://storage.360buyimg.com/mtd/home/share1535013100318.jpg'
-    }
-  }
-
-  gotoPanel = e => {
-    const { aftersale_id } = e.currentTarget.dataset
-    if (aftersale_id != 0) {
-      Taro.navigateTo({
-        // url: `/pages/detail/index?id=${id.toLowerCase()}`
-        url: `/pages/detail/index?id=${aftersale_id.toLowerCase()}`
-      })
-    }
-  }
+  // gotoPanel = e => {
+  //   const { aftersale_id } = e.currentTarget.dataset
+  //   if (aftersale_id != 0) {
+  //     Taro.navigateTo({
+  //       // url: `/pages/detail/index?id=${id.toLowerCase()}`
+  //       url: `/pages/detail/index?id=${aftersale_id.toLowerCase()}`
+  //     })
+  //   }
+  // }
 
   handleAftersaleLink = e => {
     if (e != 0) {
@@ -134,7 +132,7 @@ export default class OrderPage extends Taro.Component {
       item.amount = -item.amount
     }
 
-    return item.direction + " " + item.amount + " "
+    return item.direction + " " + item.amount + " 元"
   }
 
   render() {

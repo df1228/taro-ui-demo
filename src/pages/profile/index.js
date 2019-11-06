@@ -102,15 +102,11 @@ export default class ProfilePage extends Taro.Component {
     }
   }
 
-  handleLoadMoreClick() {
-    this.setState({
-      loadMoreStatus: 'loading'
+
+  handleWithdrawClick(data) {
+    Taro.redirectTo({
+      url: "/pages/settlement/withdraw"
     })
-    setTimeout(() => {
-      this.setState({
-        loadMoreStatus: 'noMore'
-      })
-    }, 2000)
   }
 
   handleSettlementsClick(data) {
@@ -118,6 +114,19 @@ export default class ProfilePage extends Taro.Component {
       url: "/pages/settlement/index"
     })
   }
+
+  handleFrozenClick(data) {
+    Taro.redirectTo({
+      url: "/pages/settlement/index?type=frozen"
+    })
+  }
+
+  handleWithdrawHistoryClick(data) {
+    Taro.redirectTo({
+      url: "/pages/settlement/index?type=withdraw"
+    })
+  }
+
   handleAwardsClick(data) {
     Taro.redirectTo({
       url: "/pages/settlement/index?type=award"
@@ -136,9 +145,9 @@ export default class ProfilePage extends Taro.Component {
 
   handleAmount(d) {
     if (d == 0) {
-      return "0"
+      return "0 元"
     } else {
-      return d
+      return d + " 元"
     }
   }
 
@@ -157,9 +166,9 @@ export default class ProfilePage extends Taro.Component {
         </View> */}
 
         <AtList>
-          <AtListItem title='剩余可提现' extraText={this.handleAmount(item.free_amount)} arrow='right' />
-          <AtListItem title='冻结中' extraText={this.handleAmount(item.frozen_amount)} arrow='right' />
-          <AtListItem title='已提现' extraText={this.handleAmount(item.withdraw_amount)} arrow='right' />
+          <AtListItem title='剩余可提现' extraText={this.handleAmount(item.free_amount)} arrow='right' onClick={this.handleWithdrawClick.bind(this)} />
+          <AtListItem title='冻结中' extraText={this.handleAmount(item.frozen_amount)} arrow='right' onClick={this.handleFrozenClick.bind(this)} />
+          <AtListItem title='已提现' extraText={this.handleAmount(item.withdraw_amount)} arrow='right' onClick={this.handleWithdrawHistoryClick.bind(this)} />
           <AtListItem title='奖励' extraText={this.handleAmount(item.award_amount)} arrow='right' onClick={this.handleAwardsClick.bind(this)} />
           <AtListItem title='罚款' extraText={this.handleAmount(item.fine_amount)} arrow='right' onClick={this.handleFinesClick.bind(this)} />
           <AtListItem title='历史总收入' extraText={this.handleAmount(item.total_amount)} arrow='right' onClick={this.handleIncomesClick.bind(this)} />
@@ -169,7 +178,7 @@ export default class ProfilePage extends Taro.Component {
         <View className='at-article__content remark'>
           <View className='at-article__section'>
             <View className='at-article__p'>
-              每完成一笔服务单之后，通过审核之后会有一笔服务费用转入冻结期，冻结期过后，会自动解冻，即可提现。
+              每完成一笔服务单之后，通过审核之后, 该服务单的服务费用会自动转入冻结期，冻结期过后，会自动解冻，即可提现。
             </View>
             <View className='at-article__p'>
               历史总收入 不一定等于  冻结中 + 剩余可提现 - 已提现 （在没有奖励和罚款的情况下是相等的）

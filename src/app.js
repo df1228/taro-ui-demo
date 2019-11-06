@@ -24,7 +24,7 @@ class App extends Component {
       'pages/complete/index',
       'pages/profile/index',
       'pages/settlement/index',
-
+      'pages/settlement/withdraw',
     ],
     window: {
       backgroundTextStyle: 'light',

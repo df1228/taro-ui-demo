@@ -105,6 +105,7 @@ export default class Index extends Taro.Component {
       { title: '所有订单', iconType: 'list' },
       { title: '我的', iconType: 'folder' }
     ]
+
     return (
       <View className='page page-index'>
         {/* <View className='logo'>
@@ -112,6 +113,7 @@ export default class Index extends Taro.Component {
         </View> */}
         <View className='page-title'>待处理</View>
         <View className='module-list'>
+
           {orders.map((item, index) => (
             <View
               className='module-list__item order'
@@ -127,6 +129,12 @@ export default class Index extends Taro.Component {
               </View>
             </View>
           ))}
+
+          {
+            orders.length <= 0 && <View>暂无</View>
+          }
+
+
 
 
 
