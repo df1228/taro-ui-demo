@@ -53,7 +53,7 @@ export default class CompletePage extends Taro.Component {
         if (res.ok && res.status == 204) {
           Taro.hideLoading()
           Taro.redirectTo({
-            url: '/'
+            url: `/pages/detail/index?id=${this.state.id}`
           })
         }
       })
