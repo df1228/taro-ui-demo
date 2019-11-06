@@ -17,6 +17,7 @@ export default class Index extends Taro.Component {
       userInfo: null,
       orders: [],
       todosCount: 0,
+      loading: true,
     }
   }
 
@@ -78,6 +79,9 @@ export default class Index extends Taro.Component {
         this.setState({ todosCount: res.data.length })
 
         Taro.hideLoading()
+        this.setState({
+          loading: false
+        })
       })
   }
 
@@ -131,7 +135,7 @@ export default class Index extends Taro.Component {
           ))}
 
           {
-            orders.length <= 0 && <View>暂无</View>
+            !this.state.loading && orders.length <= 0 && <View>暂无</View>
           }
 
           <AtTabBar

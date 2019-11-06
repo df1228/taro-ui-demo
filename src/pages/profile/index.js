@@ -32,7 +32,14 @@ export default class ProfilePage extends Taro.Component {
     super(...arguments)
     this.state = {
       current: 2,
-      item: {},
+      item: {
+        free_amount: 0,
+        frozen_amount: 0,
+        withdraw_amount: 0,
+        fine_amount: 0,
+        award_amount: 0,
+        total_amount: 0,
+      },
       loading: true,
     }
   }
@@ -71,8 +78,6 @@ export default class ProfilePage extends Taro.Component {
         console.log(res.data[0])
         this.setState({ item: res.data[0] })
         Taro.hideLoading()
-
-
         console.log(this.state.item)
       })
   }
@@ -178,13 +183,19 @@ export default class ProfilePage extends Taro.Component {
         <View className='at-article__content remark'>
           <View className='at-article__section'>
             <View className='at-article__p'>
-              每完成一笔服务单之后，通过审核之后, 该服务单的服务费用会自动转入冻结期，冻结期过后，会自动解冻，即可提现。
+              1. 每完成一笔服务单之后，通过审核之后, 该服务单的服务费用会自动转入冻结期，冻结期过后，会自动解冻，即可提现。
             </View>
             <View className='at-article__p'>
-              历史总收入 不一定等于  冻结中 + 剩余可提现 - 已提现 （在没有奖励和罚款的情况下是相等的）
+              2. 所以完成了多少单，历史总收入里面有多少条记录
             </View>
             <View className='at-article__p'>
-              剩余可提现 = 历史总收入 + 奖励 - 已提现  - 罚款
+              3. 剩余可提现 = 历史总收入 + 奖励 - 已提现  - 罚款
+            </View>
+            <View className='at-article__p'>
+              4. 历史总收入 不一定等于  冻结中 + 剩余可提现 - 已提现 （在没有奖励和罚款的情况下是相等的）
+            </View>
+            <View className='at-article__p'>
+              5. 由于手机屏幕大小的限制无法展示更多，如想要更详细的结算清单，请联系客服
             </View>
           </View>
         </View>
