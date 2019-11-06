@@ -20,6 +20,7 @@ export default class DetailPage extends Taro.Component {
     this.state = {
       id: 0,
       current: 0,
+      userInfo: null,
       item: {
         "created_at": "2019-10-09T06:03:07.625808+00:00",
         "updated_at": "2019-10-09T06:03:07.625808+00:00",
@@ -35,24 +36,42 @@ export default class DetailPage extends Taro.Component {
         "created_by": "1",
         "updated_by": "",
         "state": "created"
-      }
+      },
+      error: false,
     }
   }
 
   componentWillMount() {
+    let info = util.getCookieValueByName("i")
+    if (info != "") {
+      let userInfo = JSON.parse(window.atob(info))
+      console.log(userInfo)
+      console.log("before set state")
+      this.setState((state) => {
+        return { userInfo: userInfo }
+      }, () => {
+        console.log("cookie loaded")
+        console.log(this.state.userInfo)
+      })
+    }
+    console.log("userInfo in Index page")
+    console.log(this.state.userInfo)
+
     console.log(this.$router.params)
     this.setState({
       id: this.$router.params.id
     })
 
     Taro.showLoading({
-      title: 'loading'
+      title: '加载中......'
     })
       .then(res => console.log(res))
+
+
   }
 
   componentDidMount() {
-    let url = "http://api.xsjd123.com/aftersales?id=eq." + this.state.id
+    let url = "http://api.xsjd123.com/aftersales?id=eq." + this.$router.params.id
     console.log(url)
     Taro.request({
       method: "get",
@@ -61,6 +80,14 @@ export default class DetailPage extends Taro.Component {
       .then(res => {
         console.log(res.data)
         this.setState({ item: res.data[0] })
+        // in js 2 == "2" true
+        // if (this.state.item.user_id != this.state.userInfo.user_id) {
+        console.log(res.data.length == 0)
+        if (res.data.length == 0 || res.data[0].user_id != this.state.userInfo.user_id) {
+          this.setState({
+            error: true
+          })
+        }
 
         Taro.hideLoading()
       })
@@ -103,25 +130,10 @@ export default class DetailPage extends Taro.Component {
     })
   }
 
-  onShareAppMessage() {
-    return {
-      title: 'Taro UI',
-      path: '/pages/index/index',
-      imageUrl: 'http://storage.360buyimg.com/mtd/home/share1535013100318.jpg'
-    }
-  }
-
-  gotoPanel = e => {
-    const { id } = e.currentTarget.dataset
-    Taro.navigateTo({
-      // url: `/pages/panel/index?id=${id.toLowerCase()}`
-      url: `/pages/${id.toLowerCase()}/index`
-    })
-  }
-
   render() {
     const { item } = this.state
-    let status = item.state
+    let { error } = this.state
+    let status = error ? "" : item.state
     let btn = null
     if (status == "scheduled") {
       btn = <AtButton type='secondary' size='normal' onClick={this.handleReserve.bind(this)}>填写预约时间</AtButton>
@@ -135,106 +147,110 @@ export default class DetailPage extends Taro.Component {
 
     return (
       <View className='page'>
-        {/* S Body */}
-        <View className='doc-body'>
-          <View className='at-article'>
-            <View className='at-article__h1'>{item.service_content}</View>
-            <View className='at-article__info'>{util.formatDate(item.created_at, "yyyy-MM-dd hh:mm:ss")}&nbsp;&nbsp;&nbsp; {item.service_type}</View>
-            <View className='at-article__content'>
+        {
+          !error &&
+          <View className='doc-body'>
+            <View className='at-article'>
+              <View className='at-article__h1'>{item.service_content}</View>
+              <View className='at-article__info'>{util.formatDate(item.created_at, "yyyy-MM-dd hh:mm:ss")}&nbsp;&nbsp;&nbsp; {item.service_type}</View>
+              <View className='at-article__content'>
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>客户姓名</View>
-                <View className='at-article__p'>
-                  {item.customer_name}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>客户姓名</View>
+                  <View className='at-article__p'>
+                    {item.customer_name}
+                  </View>
                 </View>
-              </View>
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>客户电话</View>
-                <View className='at-article__p'>
-                  {item.customer_phone}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>客户电话</View>
+                  <View className='at-article__p'>
+                    {item.customer_phone}
+                  </View>
                 </View>
-              </View>
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>客户地址</View>
-                <View className='at-article__p'>
-                  {item.customer_address}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>客户地址</View>
+                  <View className='at-article__p'>
+                    {item.customer_address}
+                  </View>
                 </View>
-              </View>
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>服务内容</View>
-                <View className='at-article__p'>
-                  {item.service_content}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>服务内容</View>
+                  <View className='at-article__p'>
+                    {item.service_content}
+                  </View>
                 </View>
-              </View>
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>来源</View>
-                <View className='at-article__p'>
-                  {item.source}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>来源</View>
+                  <View className='at-article__p'>
+                    {item.source}
+                  </View>
                 </View>
-              </View>
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>品牌</View>
-                <View className='at-article__p'>
-                  {item.brand}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>品牌</View>
+                  <View className='at-article__p'>
+                    {item.brand}
+                  </View>
                 </View>
-              </View>
 
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>信息员备注</View>
-                <View className='at-article__p'>
-                  {item.remark}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>信息员备注</View>
+                  <View className='at-article__p'>
+                    {item.remark}
+                  </View>
                 </View>
-              </View>
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>费用</View>
-                <View className='at-article__p'>
-                  {item.fee}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>费用</View>
+                  <View className='at-article__p'>
+                    {item.fee}
+                  </View>
                 </View>
-              </View>
 
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>预约时间</View>
-                <View className='at-article__p'>
-                  暂无
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>预约时间</View>
+                  <View className='at-article__p'>
+                    暂无
                 </View>
-              </View>
-
-              <View className='at-article__section'>
-                <View className='at-article__h3'>订单创建时间</View>
-                <View className='at-article__p'>
-                  {util.formatDate(item.created_at, "yyyy-MM-dd hh:mm:ss")}
                 </View>
-              </View>
 
-              <View className='at-article__section'>
-                <View className='at-article__h3'>订单最后更新时间</View>
-                <View className='at-article__p'>
-                  {util.formatDate(item.updated_at, "yyyy-MM-dd hh:mm:ss")}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>订单创建时间</View>
+                  <View className='at-article__p'>
+                    {util.formatDate(item.created_at, "yyyy-MM-dd hh:mm:ss")}
+                  </View>
                 </View>
-              </View>
 
-              <View className='at-article__section order-state'>
-                <View className='at-article__h3'>当前状态</View>
-                <View className='at-article__p' style="color: red">
-                  {util.i18n_state1(item.state)}
+                <View className='at-article__section'>
+                  <View className='at-article__h3'>订单最后更新时间</View>
+                  <View className='at-article__p'>
+                    {util.formatDate(item.updated_at, "yyyy-MM-dd hh:mm:ss")}
+                  </View>
                 </View>
-              </View>
 
-              <View className='at-article__section bottom-button'>
-                {btn}
-              </View>
+                <View className='at-article__section order-state'>
+                  <View className='at-article__h3'>当前状态</View>
+                  <View className='at-article__p' style="color: red">
+                    {util.i18n_state1(item.state)}
+                  </View>
+                </View>
 
+                <View className='at-article__section bottom-button'>
+                  {btn}
+                </View>
+
+              </View>
             </View>
           </View>
-        </View>
+        }
+
+        {error && <View>你无权限查看此服务单（可能该服务单不存在，也可能因为你超时未响应分配给其他人了)</View>}
 
         <AtTabBar
           fixed

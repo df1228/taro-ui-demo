@@ -65,7 +65,7 @@ export default class Index extends Taro.Component {
 
   componentDidMount() {
     Taro.showLoading({
-      title: '加载中'
+      title: '加载中......'
     })
 
     Taro.request({
@@ -133,10 +133,6 @@ export default class Index extends Taro.Component {
           {
             orders.length <= 0 && <View>暂无</View>
           }
-
-
-
-
 
           <AtTabBar
             fixed

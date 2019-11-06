@@ -64,7 +64,7 @@ export default class OrderPage extends Taro.Component {
   componentDidMount() {
 
     Taro.showLoading({
-      title: '加载中'
+      title: '加载中......'
     })
 
     console.log(this.state)

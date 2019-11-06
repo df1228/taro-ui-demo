@@ -35,7 +35,7 @@ export default class ReservePage extends Taro.Component {
   handleSubmit() {
     console.log(this.state.reserved_service_time)
     Taro.showLoading({
-      title: '提交中'
+      title: '提交中......'
     })
 
     let url = "http://api.xsjd123.com/aftersales?id=eq." + this.state.id
