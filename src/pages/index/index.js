@@ -75,7 +75,7 @@ export default class Index extends Taro.Component {
       .then(res => {
         console.log(res.data)
         this.setState({ orders: res.data })
-        this.setState({ count: res.data.length })
+        this.setState({ todosCount: res.data.length })
 
         Taro.hideLoading()
       })

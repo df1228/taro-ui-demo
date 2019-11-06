@@ -71,6 +71,7 @@ export default class OrderPage extends Taro.Component {
       .then(res => {
         console.log(res.data)
         this.setState({ orders: res.data })
+        this.setState({ todosCount: "new" })
         Taro.hideLoading()
       })
   }
