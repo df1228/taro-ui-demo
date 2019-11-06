@@ -150,7 +150,7 @@ export default class CompletePage extends Taro.Component {
   render() {
     return (
       <View className='page'>
-        <DocsHeader title='确认服务完成' desc='在图片上传功能完成之前，请拍照后在微信上发给客服审核， 发了之后，点确认按钮'></DocsHeader>
+        <DocsHeader title='确认服务完成' desc='请拍照证明你完成了该服务单，并提交给客服审核，审核成功即可收到该订单的费用，冻结期一过，即可提现 .....'></DocsHeader>
 
         <View className='doc-body'>
           <View className='panel'>
