@@ -86,9 +86,9 @@ export default class ReservePage extends Taro.Component {
   render() {
 
     var tabs = [
-      { title: '待处理', iconType: 'bullet-list' },
+      { title: '待处理', iconType: 'check-circle' },
       { title: '所有订单', iconType: 'list' },
-      { title: '我的', iconType: 'folder' }
+      { title: '我的', iconType: 'user' }
     ]
 
     return (

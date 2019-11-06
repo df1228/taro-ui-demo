@@ -255,7 +255,7 @@ export default class DetailPage extends Taro.Component {
         <AtTabBar
           fixed
           tabList={[
-            { title: '待处理', iconType: 'bullet-list' },
+            { title: '待处理', iconType: 'check-circle' },
             { title: '所有', iconType: 'list' },
             { title: '我的结算', iconType: 'folder' }
           ]}

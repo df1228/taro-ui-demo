@@ -61,7 +61,7 @@ export default class NavigationPage extends Taro.Component {
 
   render() {
     const { tabsListValue, tabsListValue2, segmentedValue } = this.state
-    const tabbarList = [{ title: '待处理', iconType: 'bullet-list', text: 'new' }, { title: '拍照', iconType: 'camera' }, { title: '文件夹', iconType: 'folder', text: '100', max: '99' }]
+    const tabbarList = [{ title: '待处理', iconType: 'check-circle', text: 'new' }, { title: '拍照', iconType: 'camera' }, { title: '文件夹', iconType: 'folder', text: '100', max: '99' }]
     const tabList = [
       { title: '标签页1' },
       { title: '标签页2' },

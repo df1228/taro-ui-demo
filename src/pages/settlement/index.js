@@ -139,9 +139,9 @@ export default class OrderPage extends Taro.Component {
     const { items } = this.state
     const { todosCount } = this.state
     var tabs = [
-      { title: '待处理', iconType: 'bullet-list', text: todosCount },
+      { title: '待处理', iconType: 'check-circle', text: todosCount },
       { title: '所有订单', iconType: 'list' },
-      { title: '我的', iconType: 'folder' }
+      { title: '我的', iconType: 'user' }
     ]
 
     return (
