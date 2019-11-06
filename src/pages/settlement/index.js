@@ -36,7 +36,7 @@ export default class OrderPage extends Taro.Component {
         url: '/pages/profile/index'
       })
     } else {
-      Taro.navigateTo({
+      Taro.redirectTo({
         url: '/pages/index/index'
       })
     }
@@ -109,16 +109,6 @@ export default class OrderPage extends Taro.Component {
         Taro.hideLoading()
       })
   }
-
-  // gotoPanel = e => {
-  //   const { aftersale_id } = e.currentTarget.dataset
-  //   if (aftersale_id != 0) {
-  //     Taro.navigateTo({
-  //       // url: `/pages/detail/index?id=${id.toLowerCase()}`
-  //       url: `/pages/detail/index?id=${aftersale_id.toLowerCase()}`
-  //     })
-  //   }
-  // }
 
   handleAftersaleLink = e => {
     if (e != 0) {

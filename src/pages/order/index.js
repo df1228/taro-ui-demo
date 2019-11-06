@@ -38,7 +38,7 @@ export default class OrderPage extends Taro.Component {
         url: '/pages/profile/index'
       })
     } else {
-      Taro.navigateTo({
+      Taro.redirectTo({
         url: '/pages/index/index'
       })
     }
@@ -86,7 +86,7 @@ export default class OrderPage extends Taro.Component {
 
   gotoPanel = e => {
     const { id } = e.currentTarget.dataset
-    Taro.navigateTo({
+    Taro.redirectTo({
       // url: `/pages/panel/index?id=${id.toLowerCase()}`
       url: `/pages/detail/index?id=${id.toLowerCase()}`
     })

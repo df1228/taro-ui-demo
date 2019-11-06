@@ -40,7 +40,7 @@ export default class Index extends Taro.Component {
         url: '/pages/profile/index'
       })
     } else {
-      Taro.navigateTo({
+      Taro.redirectTo({
         url: '/pages/index/index'
       })
     }

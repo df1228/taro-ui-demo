@@ -36,7 +36,7 @@ export default class ReservePage extends Taro.Component {
 
     if (value == 1) {
       // // 跳转到目的页面，打开新页面
-      Taro.navigateTo({
+      Taro.redirectTo({
         url: '/pages/order/index'
       })
       // // 跳转到目的页面，在当前页面打开
@@ -44,11 +44,11 @@ export default class ReservePage extends Taro.Component {
       //   url: '/pages/page/path/name'
       // })
     } else if (value == 2) {
-      Taro.navigateTo({
+      Taro.redirectTo({
         url: '/pages/profile/index'
       })
     } else {
-      Taro.navigateTo({
+      Taro.redirectTo({
         url: '/'
       })
     }
