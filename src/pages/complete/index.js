@@ -37,7 +37,28 @@ export default class CompletePage extends Taro.Component {
   }
 
   handleSubmit() {
+    let url = "http://api.xsjd123.com/aftersales?id=eq." + this.state.id
+    let data = {
+      state: "processed"
+    }
+    fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then((res) => {
+        console.log(res)
+        if (res.ok && res.status == 204) {
+          Taro.hideLoading()
+          Taro.redirectTo({
+            url: '/'
+          })
+        }
+      })
 
+    // 图片上传功能还未完成，需要后端支持
     const { files } = this.state
     if (files.length > 0) {
       // const rootUrl = get('rootUrl') // 服务器地址
@@ -60,26 +81,7 @@ export default class CompletePage extends Taro.Component {
 
     console.log(this.state.files)
 
-    // let url = "http://api.xsjd123.com/aftersales?id=eq." + this.state.id
-    // let data = {
-    //   state: "processed"
-    // }
-    // fetch(url, {
-    //   method: "PATCH",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    //   .then((res) => {
-    //     console.log(res)
-    //     if (res.ok && res.status == 204) {
-    //       Taro.hideLoading()
-    //       Taro.redirectTo({
-    //         url: '/'
-    //       })
-    //     }
-    //   })
+
   }
 
   // 上传组件
