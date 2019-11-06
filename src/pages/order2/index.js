@@ -6,7 +6,7 @@ import { AtTabBar } from 'taro-ui'
 
 export default class OrderPage extends Taro.Component {
   config = {
-    navigationBarTitleText: 'Taro UI'
+    navigationBarTitleText: '家电售后接单平台'
   }
 
   constructor() {

@@ -43,10 +43,10 @@ const INIT_STATE = {
 
 export default class FeedbackPage extends Taro.Component {
   config = {
-    navigationBarTitleText: 'Taro UI'
+    navigationBarTitleText: '家电售后接单平台'
   }
 
-  constructor () {
+  constructor() {
     super(...arguments)
     this.state = {
       isActionSheetOpened1: false,
@@ -60,7 +60,7 @@ export default class FeedbackPage extends Taro.Component {
     }
   }
 
-  handleActionSheetClick (type) {
+  handleActionSheetClick(type) {
     this.setState({
       [`isActionSheetOpened${type}`]: true
     })
@@ -70,33 +70,33 @@ export default class FeedbackPage extends Taro.Component {
     this.showToast('点击了取消按钮')
   }
 
-  handleActionSheetClose (name) {
+  handleActionSheetClose(name) {
     this.setState({
       [`isActionSheetOpened${name}`]: false
     })
   }
 
-  handleMessageClick (type) {
+  handleMessageClick(type) {
     Taro.atMessage({
       'message': '消息通知',
       'type': type,
     })
   }
 
-  handleModalClick (type) {
+  handleModalClick(type) {
     this.setState({
       [`isModalOpened${type}`]: true
     })
   }
 
-  closeModal (type, msg) {
+  closeModal(type, msg) {
     this.setState({
       [`isModalOpened${type}`]: false
     })
     this.showToast(msg)
   }
 
-  handleToastClick (text, icon, image, hasMask, status) {
+  handleToastClick(text, icon, image, hasMask, status) {
     if (this.state.isOpened) {
       return this.setState(INIT_STATE)
     }
@@ -114,14 +114,14 @@ export default class FeedbackPage extends Taro.Component {
     })
   }
 
-  showToast (name) {
+  showToast(name) {
     Taro.showToast({
       icon: 'none',
       title: name
     })
   }
 
-  render () {
+  render() {
     return (
       <View className='page'>
         {/* S Header */}

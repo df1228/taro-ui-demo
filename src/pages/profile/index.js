@@ -25,7 +25,7 @@ import curtainPng from '../../assets/images/curtain.png'
 
 export default class ProfilePage extends Taro.Component {
   config = {
-    navigationBarTitleText: 'Taro UI'
+    navigationBarTitleText: '家电售后接单平台'
   }
 
   constructor() {

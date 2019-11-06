@@ -11,7 +11,7 @@ import util from '../../utils/util'
 
 export default class DetailPage extends Taro.Component {
   config = {
-    navigationBarTitleText: 'Taro UI'
+    navigationBarTitleText: '家电售后接单平台'
   }
 
   constructor() {

@@ -6,13 +6,13 @@ import './index.scss'
 
 export default class Index extends Taro.Component {
   config = {
-    navigationBarTitleText: 'Taro UI'
+    navigationBarTitleText: '家电售后接单平台'
   }
-  onClick (item) {
+  onClick(item) {
     console.log(item)
   }
 
-  render () {
+  render() {
     return (
       <View className='page' style='height: 100vh;'>
         {/* 基础用法 */}

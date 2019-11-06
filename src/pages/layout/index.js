@@ -13,10 +13,10 @@ import './index.scss'
 
 export default class LayoutPage extends Taro.Component {
   config = {
-    navigationBarTitleText: 'Taro UI'
+    navigationBarTitleText: '家电售后接单平台'
   }
 
-  constructor () {
+  constructor() {
     super(...arguments)
     this.state = {
       data: [
@@ -55,13 +55,13 @@ export default class LayoutPage extends Taro.Component {
     }
   }
 
-  handleFloatLayoutChange (flag) {
+  handleFloatLayoutChange(flag) {
     this.setState({
       isFloatLayoutOpened: flag
     })
   }
 
-  render () {
+  render() {
     return (
       <View className='page'>
         {/* S Header */}

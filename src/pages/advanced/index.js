@@ -6,7 +6,7 @@ import './index.scss'
 
 export default class BasicPage extends Taro.Component {
   config = {
-    navigationBarTitleText: 'Taro UI'
+    navigationBarTitleText: '家电售后接单平台'
   }
 
   state = {

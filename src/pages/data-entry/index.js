@@ -19,10 +19,10 @@ import './index.scss'
 
 export default class DataEntryPage extends Taro.Component {
   config = {
-    navigationBarTitleText: 'Taro UI'
+    navigationBarTitleText: '家电售后接单平台'
   }
 
-  constructor () {
+  constructor() {
     super(...arguments)
 
     const date = new Date()
@@ -89,7 +89,7 @@ export default class DataEntryPage extends Taro.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const env = Taro.getEnv()
     this.setState({
       isWeapp: env === Taro.ENV_TYPE.WEAPP,
@@ -97,37 +97,37 @@ export default class DataEntryPage extends Taro.Component {
     })
   }
 
-  handleCheckboxChange (value) {
+  handleCheckboxChange(value) {
     this.setState({
       checkedList: value
     })
   }
 
-  handleImageChange (stateName, files) {
+  handleImageChange(stateName, files) {
     this.setState({
       [stateName]: files
     })
   }
 
-  handleInput (stateName, value) {
+  handleInput(stateName, value) {
     this.setState({
       [stateName]: value
     })
   }
 
-  handleNumberChange (stateName, value) {
+  handleNumberChange(stateName, value) {
     this.setState({
       [stateName]: value
     })
   }
 
-  handlePickerChange (e) {
+  handlePickerChange(e) {
     this.setState({
       selectorValue: e.detail.value
     })
   }
 
-  handlePickerViewChange (e) {
+  handlePickerViewChange(e) {
     const val = e.detail.value
 
     this.setState({
@@ -138,31 +138,31 @@ export default class DataEntryPage extends Taro.Component {
     })
   }
 
-  handleRadioChange (value) {
+  handleRadioChange(value) {
     this.setState({
       radioValue: value
     })
   }
 
-  handleRangeChange (stateName, value) {
+  handleRangeChange(stateName, value) {
     this.setState({
       [stateName]: value
     })
   }
 
-  handleRateChange (stateName, value) {
+  handleRateChange(stateName, value) {
     this.setState({
       [stateName]: value
     })
   }
 
-  handleSearchBarChange (stateName, value) {
+  handleSearchBarChange(stateName, value) {
     this.setState({
       [stateName]: value
     })
   }
 
-  onActionClick () {
+  onActionClick() {
     Taro.showToast({
       title: '开始搜索',
       icon: 'success',
@@ -170,19 +170,19 @@ export default class DataEntryPage extends Taro.Component {
     })
   }
 
-  handleSwitchChange (value) {
+  handleSwitchChange(value) {
     this.setState({
       switchValue: value
     })
   }
 
-  handleTextareaChange (stateName, e) {
+  handleTextareaChange(stateName, e) {
     this.setState({
       [stateName]: e.target.value
     })
   }
 
-  render () {
+  render() {
     const { years, months, days, value, year, month, day, isWeapp, isAlipay } = this.state
 
     return (
@@ -396,13 +396,13 @@ export default class DataEntryPage extends Taro.Component {
                       <View className='title-date'>{year}年{month}月{day}日</View>
                       <PickerView indicatorStyle='height: 50px;' className='picker' style='width: 100%; height: 300px; text-align: center;' value={value} onChange={this.handlePickerViewChange.bind(this)}>
                         <PickerViewColumn>
-                          { years.map((item, idx) => <View key={idx} style='line-height: 50px'>{item}年</View>) }
+                          {years.map((item, idx) => <View key={idx} style='line-height: 50px'>{item}年</View>)}
                         </PickerViewColumn>
                         <PickerViewColumn>
-                          { months.map((item, idx) => <View key={idx} style='line-height: 50px'>{item}月</View>) }
+                          {months.map((item, idx) => <View key={idx} style='line-height: 50px'>{item}月</View>)}
                         </PickerViewColumn>
                         <PickerViewColumn>
-                          { days.map((item, idx) => <View key={idx} style='line-height: 50px'>{item}日</View>) }
+                          {days.map((item, idx) => <View key={idx} style='line-height: 50px'>{item}日</View>)}
                         </PickerViewColumn>
                       </PickerView>
                     </View>
