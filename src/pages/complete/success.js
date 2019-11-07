@@ -1,9 +1,8 @@
 import Taro from '@tarojs/taro'
-import { View, Text, Button, Input } from '@tarojs/components'
-import { AtButton, AtImagePicker } from 'taro-ui'
+import { View } from '@tarojs/components'
+import { AtButton } from 'taro-ui'
 import DocsHeader from '../components/doc-header'
 import './index.scss'
-import { func } from 'prop-types'
 
 
 export default class CompleteSuccessPage extends Taro.Component {
