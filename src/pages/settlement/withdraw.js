@@ -7,9 +7,9 @@ import {
   AtTabBar,
 } from 'taro-ui'
 
-export default class ReservePage extends Taro.Component {
+export default class WithdrawPage extends Taro.Component {
   config = {
-    navigationBarTitleText: '确定预约时间'
+    navigationBarTitleText: '提现'
   }
 
   constructor() {

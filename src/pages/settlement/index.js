@@ -5,7 +5,7 @@ import './index.scss'
 import { AtTabBar, AtAvatar } from 'taro-ui'
 import util from '../../utils/util'
 
-export default class OrderPage extends Taro.Component {
+export default class SettlementPage extends Taro.Component {
   config = {
     navigationBarTitleText: '家电售后接单平台'
   }

@@ -31,10 +31,6 @@ export default class Index extends Taro.Component {
       Taro.redirectTo({
         url: '/pages/order/index'
       })
-      // // 跳转到目的页面，在当前页面打开
-      // Taro.redirectTo({
-      //   url: '/pages/page/path/name'
-      // })
     } else if (value == 2) {
       Taro.redirectTo({
         url: '/pages/profile/index'
@@ -83,14 +79,6 @@ export default class Index extends Taro.Component {
           loading: false
         })
       })
-  }
-
-  onShareAppMessage() {
-    return {
-      title: 'Taro UI',
-      path: '/pages/index/index',
-      imageUrl: 'http://storage.360buyimg.com/mtd/home/share1535013100318.jpg'
-    }
   }
 
   gotoPanel = e => {
