@@ -6,7 +6,7 @@ import './index.scss'
 import { func } from 'prop-types'
 
 
-export default class CompletePage extends Taro.Component {
+export default class CompleteSuccessPage extends Taro.Component {
   config = {
     navigationBarTitleText: '确定服务完成'
   }
@@ -34,10 +34,10 @@ export default class CompletePage extends Taro.Component {
   }
 
   componentDidMount() {
-    setInterval(this.counter.bind(this), 1000)
+    // setInterval(this.counter.bind(this), 1000)
 
     setTimeout(function () {
-      clearInterval(this.counter)
+      // clearInterval(this.counter)
       Taro.redirectTo({
         url: `/`
       })
