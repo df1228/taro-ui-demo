@@ -53,7 +53,7 @@ export default class CompletePage extends Taro.Component {
         if (res.ok && res.status == 204) {
           Taro.hideLoading()
           Taro.redirectTo({
-            url: `/pages/detail/index?id=${this.state.id}`
+            url: `/pages/complete/success?id=${this.state.id}`
           })
         }
       })
@@ -80,8 +80,6 @@ export default class CompletePage extends Taro.Component {
     // })
 
     console.log(this.state.files)
-
-
   }
 
   // 上传组件

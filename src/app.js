@@ -22,6 +22,7 @@ class App extends Component {
       'pages/bindPhone/index',
       'pages/reserve/index',
       'pages/complete/index',
+      'pages/complete/success',
       'pages/profile/index',
       'pages/settlement/index',
       'pages/settlement/withdraw',
