@@ -36,12 +36,12 @@ export default class CompleteSuccessPage extends Taro.Component {
   componentDidMount() {
     // setInterval(this.counter.bind(this), 1000)
 
-    setTimeout(function () {
-      // clearInterval(this.counter)
-      Taro.redirectTo({
-        url: `/`
-      })
-    }, 5000)
+    // setTimeout(function () {
+    //   // clearInterval(this.counter)
+    //   Taro.redirectTo({
+    //     url: `/`
+    //   })
+    // }, 5000)
   }
 
   handleSubmit() {
