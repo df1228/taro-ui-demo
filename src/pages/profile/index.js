@@ -1,23 +1,12 @@
 import Taro from '@tarojs/taro'
 import { View, Image, Swiper, SwiperItem } from '@tarojs/components'
 import {
-  AtAvatar,
-  AtBadge,
-  AtButton,
-  AtCountdown,
-  AtCurtain,
-  AtDivider,
-  AtLoadMore,
-  AtNoticebar,
-  AtSteps,
-  AtTag,
-  AtTimeline,
   AtList,
   AtListItem,
-  AtTabBar,
 } from 'taro-ui'
 import util from '../../utils/util'
 import DocsHeader from '../components/doc-header'
+import TabBar from '../components/tabbar'
 import NavigatorBtn from '../components/navigator-btn'
 import './index.scss'
 
@@ -45,41 +34,39 @@ export default class ProfilePage extends Taro.Component {
   }
 
   componentWillMount() {
-    let info = util.getCookieValueByName("i")
-    if (info != "") {
-      let userInfo = JSON.parse(window.atob(info))
-      console.log(userInfo)
-      this.setState({
-        userInfo: userInfo
-      }, () => {
-        console.log("userInfo loaded from cookie is :")
-        console.log(this.state.userInfo)
-      })
-    }
+    // let info = util.getCookieValueByName("i")
+    // if (info != "") {
+    //   let userInfo = JSON.parse(window.atob(info))
+    //   console.log(userInfo)
+    //   this.setState({
+    //     userInfo: userInfo
+    //   }, () => {
+    //     console.log("userInfo loaded from cookie is :")
+    //     console.log(this.state.userInfo)
+    //   })
+    // }
   }
 
   componentDidMount() {
+    // Taro.showLoading({
+    //   title: '加载中......'
+    // })
 
-    Taro.showLoading({
-      title: '加载中......'
-    })
+    // console.log(this.state)
+    // var url = "http://api.xsjd123.com/balances?user_id=eq." + this.state.userInfo.user_id
+    // console.log(url)
 
-    console.log(this.state)
-    var url = "http://api.xsjd123.com/balances?user_id=eq." + this.state.userInfo.user_id
-    console.log(url)
-
-
-    Taro.request({
-      method: "get",
-      url: url
-    })
-      .then(res => {
-        console.log("fuck")
-        console.log(res.data[0])
-        this.setState({ item: res.data[0] })
-        Taro.hideLoading()
-        console.log(this.state.item)
-      })
+    // Taro.request({
+    //   method: "get",
+    //   url: url
+    // })
+    //   .then(res => {
+    //     console.log("fuck")
+    //     console.log(res.data[0])
+    //     this.setState({ item: res.data[0] })
+    //     Taro.hideLoading()
+    //     console.log(this.state.item)
+    //   })
   }
 
   handleClick(value) {
@@ -162,9 +149,9 @@ export default class ProfilePage extends Taro.Component {
     return (
       <View className='page page-index profile'>
 
-        <View className="avatar">
+        {/* <View className="avatar">
           <AtAvatar circle size="large" image={this.state.userInfo.headimgurl}></AtAvatar>
-        </View>
+        </View> */}
 
         {/* <View className='logo'>
           <Image src='https://jdc.jd.com/img/200' className='img' mode='widthFix' />
@@ -200,16 +187,8 @@ export default class ProfilePage extends Taro.Component {
           </View>
         </View>
 
-        <AtTabBar
-          fixed
-          tabList={[
-            { title: '待处理', iconType: 'check-circle' },
-            { title: '所有订单', iconType: 'list' },
-            { title: '我的', iconType: 'user' }
-          ]}
-          onClick={this.handleClick.bind(this)}
-          current={this.state.current}
-        />
+        <TabBar current={2}></TabBar>
+
       </View >
     )
   }

@@ -4,6 +4,7 @@ import logoImg from '../../assets/images/logo_taro.png'
 import './index.scss'
 import { AtTabBar } from 'taro-ui'
 import util from '../../utils/util'
+import TabBar from '../components/tabbar'
 
 export default class Index extends Taro.Component {
   config = {
@@ -21,64 +22,47 @@ export default class Index extends Taro.Component {
     }
   }
 
-  handleClick(value) {
-    this.setState({
-      current: value
-    })
-
-    if (value == 1) {
-      // // 跳转到目的页面，打开新页面
-      Taro.redirectTo({
-        url: '/pages/order/index'
-      })
-    } else if (value == 2) {
-      Taro.redirectTo({
-        url: '/pages/profile/index'
-      })
-    } else {
-      Taro.redirectTo({
-        url: '/pages/index/index'
-      })
-    }
-  }
-
   componentWillMount() {
-    let info = util.getCookieValueByName("i")
-    if (info != "") {
-      let userInfo = JSON.parse(window.atob(info))
-      console.log(userInfo)
-      console.log("before set state")
-      this.setState((state) => {
-        return { userInfo: userInfo }
-      }, () => {
-        console.log("cookie loaded")
-        console.log(this.state.userInfo)
-      })
-    }
+    if (process.env.TARO_ENV === 'h5') {
+      let info = util.getCookieValueByName("i")
+      if (info != "") {
+        let userInfo = JSON.parse(window.atob(info))
+        console.log(userInfo)
+        console.log("before set state")
+        this.setState((state) => {
+          return { userInfo: userInfo }
+        }, () => {
+          console.log("cookie loaded")
+          console.log(this.state.userInfo)
+        })
+      }
 
-    console.log("userInfo in Index page")
-    console.log(this.state.userInfo)
+      console.log("userInfo in Index page")
+      console.log(this.state.userInfo)
+    }
   }
 
   componentDidMount() {
-    Taro.showLoading({
-      title: '加载中......'
-    })
-
-    Taro.request({
-      method: "get",
-      url: 'http://api.xsjd123.com/aftersales?order=created_at.desc&state=in.(scheduled,processing)&user_id=eq.' + this.state.userInfo.user_id
-    })
-      .then(res => {
-        console.log(res.data)
-        this.setState({ orders: res.data })
-        this.setState({ todosCount: res.data.length })
-
-        Taro.hideLoading()
-        this.setState({
-          loading: false
-        })
+    if (process.env.TARO_ENV === 'h5') {
+      Taro.showLoading({
+        title: '加载中......'
       })
+
+      Taro.request({
+        method: "get",
+        url: 'http://api.xsjd123.com/aftersales?order=created_at.desc&state=in.(scheduled,processing)&user_id=eq.' + this.state.userInfo.user_id
+      })
+        .then(res => {
+          console.log(res.data)
+          this.setState({ orders: res.data })
+          this.setState({ todosCount: res.data.length })
+
+          Taro.hideLoading()
+          this.setState({
+            loading: false
+          })
+        })
+    }
   }
 
   gotoPanel = e => {
@@ -126,14 +110,10 @@ export default class Index extends Taro.Component {
             !this.state.loading && orders.length <= 0 && <View>暂无</View>
           }
 
-          <AtTabBar
-            fixed
-            tabList={tabs}
-            onClick={this.handleClick.bind(this)}
-            current={this.state.current}
-          />
+          <TabBar current={0} ></TabBar>
+
         </View>
-      </View>
+      </View >
     )
   }
 }
